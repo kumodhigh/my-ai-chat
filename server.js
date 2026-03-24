@@ -31,10 +31,22 @@ app.post("/chat", async (req, res) => {
 
   try {
     // Start a chat session with the full conversation history
-    const chat = model.startChat({
-      history: history,
-      generationConfig: { maxOutputTokens: 1000 },
-    });
+  const chat = model.startChat({
+  history: history,
+  generationConfig: { maxOutputTokens: 1000 },
+  systemInstruction: {
+    parts: [{
+      text: `You are Aria, a friendly and intelligent personal assistant.
+      Your personality:
+      - Warm, helpful and conversational
+      - Give clear and concise answers, never too long
+      - If you don't know something, say so honestly
+      - Use simple language, avoid unnecessary jargon
+      - Occasionally use light humor to keep things friendly
+      - Always end with asking if there is anything else you can help with`
+    }]
+  },
+});
 
     // Send the user's message and wait for the reply
     const result = await chat.sendMessage(userMessage);
