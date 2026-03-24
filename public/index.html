@@ -5,22 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aria — Personal Assistant</title>
   <link rel="stylesheet" href="style.css" />
+  <!-- Markdown rendering library -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <div class="chat-container">
+
+    <!-- Header -->
     <div class="chat-header">
       <span class="dot"></span>
       Aria — Personal Assistant
+      <button id="clear-btn" title="Clear chat">↺ Clear</button>
     </div>
+
+    <!-- Messages -->
     <div id="chat-messages" class="chat-messages">
       <div class="message ai">
         Hi there! I'm Aria, your personal assistant. I can help you with anything — questions, ideas, planning, advice, or just a chat. What's on your mind? 😊
       </div>
+
+      <!-- Suggested questions -->
+      <div class="suggestions" id="suggestions">
+        <button class="chip" onclick="askSuggestion('What can you help me with?')">What can you help me with?</button>
+        <button class="chip" onclick="askSuggestion('Give me a productivity tip for today')">Give me a productivity tip</button>
+        <button class="chip" onclick="askSuggestion('Tell me something interesting')">Tell me something interesting</button>
+        <button class="chip" onclick="askSuggestion('Help me write a short email')">Help me write an email</button>
+      </div>
     </div>
+
+    <!-- Input -->
     <div class="chat-input-area">
       <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off"/>
       <button id="send-btn">Send</button>
     </div>
+
   </div>
   <script src="app.js"></script>
 </body>
