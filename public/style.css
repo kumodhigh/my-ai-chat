@@ -3,29 +3,38 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-/* Page background */
 body {
   background: #0f0f1a;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
+  margin: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* Main chat box */
 .chat-container {
   width: 480px;
-  height: 680px;
+  height: 100vh;
+  max-height: 100vh;
   background: #13131f;
-  border-radius: 20px;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border: 1px solid #2a2a3d;
 }
+
+@media (min-height: 600px) and (min-width: 520px) {
+  .chat-container {
+    height: 92vh;
+    max-height: 800px;
+    border-radius: 20px;
+  }
+}}
+
+/* Page background */
+
 
 /* Header */
 .chat-header {
@@ -308,4 +317,77 @@ body {
 .message.ai pre code {
   background: none;
   padding: 0;
+}
+
+/* Header layout */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.agent-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4ecca3, #3a7bd5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #13131f;
+  flex-shrink: 0;
+}
+
+.agent-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+}
+
+.agent-status {
+  font-size: 11px;
+  color: #4ecca3;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Agent selector bar */
+.agent-bar {
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #2a2a3d;
+  background: #13131f;
+  overflow-x: auto;
+}
+
+.agent-bar::-webkit-scrollbar {
+  height: 0;
+}
+
+.agent-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #2a2a3d;
+  background: none;
+  color: #9090b0;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.agent-btn:hover {
+  border-color: #4ecca3;
+  color: #4ecca3;
+}
+
+.agent-btn.active {
+  background: #4ecca3;
+  color: #13131f;
+  border-color: #4ecca3;
+  font-weight: 600;
 }
