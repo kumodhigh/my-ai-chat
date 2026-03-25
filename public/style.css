@@ -36,20 +36,6 @@ body {
 /* Page background */
 
 
-/* Header */
-.chat-header {
-  background: #13131f;
-  color: white;
-  padding: 18px 24px;
-  font-size: 15px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid #2a2a3d;
-  letter-spacing: 0.3px;
-}
-
 /* Online dot with glow */
 .dot {
   width: 9px;
