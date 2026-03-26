@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
 body {
   background: #0f0f1a;
   display: flex;
@@ -31,7 +32,20 @@ body {
     max-height: 800px;
     border-radius: 20px;
   }
-}}
+}
+
+.chat-header {
+  background: #13131f;
+  color: white;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #2a2a3d;
+  letter-spacing: 0.3px;
+}
 
 /* Page background */
 
