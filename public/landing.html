@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Assistant — Your Personal AI Agent</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0f0f1a;
+      color: #e0e0f0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── Navbar ─── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 60px;
+      border-bottom: 1px solid #2a2a3d;
+      position: sticky;
+      top: 0;
+      background: #0f0f1aee;
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: #4ecca3;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      font-size: 14px;
+      color: #9090b0;
+    }
+
+    .nav-links a:hover { color: #4ecca3; }
+
+    .nav-cta {
+      background: #4ecca3;
+      color: #0f0f1a;
+      padding: 9px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: opacity 0.2s;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── Hero ─── */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #1e1e2e;
+      border: 1px solid #2a2a3d;
+      color: #4ecca3;
+      font-size: 12px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #ffffff, #4ecca3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #9090b0;
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4ecca3, #3ab88e);
+      color: #0f0f1a;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: opacity 0.2s, transform 0.1s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: none;
+      border: 1px solid #2a2a3d;
+      color: #9090b0;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover { border-color: #4ecca3; color: #4ecca3; }
+
+    /* ─── Demo Screenshot ─── */
+    .demo {
+      max-width: 900px;
+      margin: 0 auto 100px;
+      padding: 0 20px;
+    }
+
+    .demo-window {
+      background: #13131f;
+      border: 1px solid #2a2a3d;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+
+    .demo-bar {
+      background: #0d0d1a;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid #2a2a3d;
+    }
+
+    .demo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .demo-inner {
+      display: flex;
+      height: 380px;
+    }
+
+    .demo-sidebar {
+      width: 200px;
+      background: #0d0d1a;
+      border-right: 1px solid #2a2a3d;
+      padding: 16px 12px;
+    }
+
+    .demo-new-btn {
+      background: #4ecca3;
+      color: #0d0d1a;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .demo-label {
+      font-size: 10px;
+      color: #44445a;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .demo-agent {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #9090b0;
+      margin-bottom: 4px;
+    }
+
+    .demo-agent.active {
+      background: #1e1e2e;
+      color: #4ecca3;
+      font-weight: 600;
+    }
+
+    .demo-chat {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .demo-msg {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      max-width: 75%;
+    }
+
+    .demo-msg.ai {
+      background: #1e1e2e;
+      border: 1px solid #2a2a3d;
+      color: #e0e0f0;
+      align-self: flex-start;
+    }
+
+    .demo-msg.user {
+      background: linear-gradient(135deg, #3a7bd5, #2d5fa8);
+      color: white;
+      align-self: flex-end;
+    }
+
+    .demo-input {
+      margin-top: auto;
+      background: #1e1e2e;
+      border: 1px solid #2a2a3d;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #44445a;
+    }
+
+    /* ─── Features ─── */
+    .features {
+      max-width: 1000px;
+      margin: 0 auto 100px;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: #9090b0;
+      font-size: 16px;
+      margin-bottom: 56px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: #13131f;
+      border: 1px solid #2a2a3d;
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: #4ecca3;
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: #9090b0;
+      line-height: 1.7;
+    }
+
+    /* ─── Pricing ─── */
+    .pricing {
+      max-width: 900px;
+      margin: 0 auto 100px;
+      padding: 0 20px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .pricing-card {
+      background: #13131f;
+      border: 1px solid #2a2a3d;
+      border-radius: 16px;
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .pricing-card.popular {
+      border-color: #4ecca3;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #4ecca3;
+      color: #0f0f1a;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .plan-name {
+      font-size: 14px;
+      color: #9090b0;
+      margin-bottom: 8px;
+    }
+
+    .plan-price {
+      font-size: 42px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 4px;
+    }
+
+    .plan-price span {
+      font-size: 16px;
+      font-weight: 400;
+      color: #9090b0;
+    }
+
+    .plan-desc {
+      font-size: 13px;
+      color: #9090b0;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #2a2a3d;
+    }
+
+    .plan-features {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .plan-features li {
+      font-size: 13px;
+      color: #e0e0f0;
+      padding: 7px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .plan-features li::before {
+      content: "✓";
+      color: #4ecca3;
+      font-weight: 700;
+    }
+
+    .plan-btn {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .plan-btn.outline {
+      border: 1px solid #2a2a3d;
+      color: #9090b0;
+    }
+
+    .plan-btn.outline:hover { border-color: #4ecca3; color: #4ecca3; }
+
+    .plan-btn.filled {
+      background: linear-gradient(135deg, #4ecca3, #3ab88e);
+      color: #0f0f1a;
+    }
+
+    .plan-btn.filled:hover { opacity: 0.9; }
+
+    /* ─── CTA ─── */
+    .cta {
+      text-align: center;
+      padding: 80px 20px 100px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cta h2 {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #ffffff, #4ecca3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta p {
+      font-size: 16px;
+      color: #9090b0;
+      margin-bottom: 36px;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid #2a2a3d;
+      padding: 24px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #44445a;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 36px; }
+      .demo-sidebar { display: none; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-logo">✦ AI Assistant</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#demo">Demo</a>
+    </div>
+    <a href="/index.html" class="nav-cta">Try it Free →</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">✦ 3 AI Agents in one app</div>
+    <h1>Your Personal AI Assistant</h1>
+    <p>Meet Aria, StudyMate and Code Helper — three powerful AI agents ready to help you with anything, study smarter, and write better code.</p>
+    <div class="hero-btns">
+      <a href="/index.html" class="btn-primary">Try it Free →</a>
+      <a href="#features" class="btn-secondary">See Features</a>
+    </div>
+  </section>
+
+  <!-- Demo -->
+  <section class="demo" id="demo">
+    <div class="demo-window">
+      <div class="demo-bar">
+        <div class="demo-dot" style="background:#ff5f57"></div>
+        <div class="demo-dot" style="background:#febc2e"></div>
+        <div class="demo-dot" style="background:#28c840"></div>
+      </div>
+      <div class="demo-inner">
+        <div class="demo-sidebar">
+          <button class="demo-new-btn">✏ New Chat</button>
+          <div class="demo-label">Agents</div>
+          <div class="demo-agent">🤖 Aria</div>
+          <div class="demo-agent active">📚 StudyMate</div>
+          <div class="demo-agent">💻 Code Helper</div>
+        </div>
+        <div class="demo-chat">
+          <div class="demo-msg ai">Hi! I'm StudyMate 📚 What would you like to study today?</div>
+          <div class="demo-msg user">Explain Newton's first law</div>
+          <div class="demo-msg ai">Newton's first law says an object stays at rest or keeps moving unless a force acts on it. Think of a ball rolling — it only stops because of friction!</div>
+          <div class="demo-input">Ask anything...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="section-title">Everything you need</div>
+    <div class="section-sub">Three specialized agents, one clean interface</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>Aria — Personal Assistant</h3>
+        <p>Ask Aria anything. Get help with writing, planning, ideas, advice and everyday questions in a warm and friendly conversation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>StudyMate — Study Assistant</h3>
+        <p>Learn any subject with clear explanations, practice questions and instant feedback. Includes Loksewa exam preparation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💻</div>
+        <h3>Code Helper — Dev Assistant</h3>
+        <p>Debug errors, understand code, get working examples in any language. Perfect for beginners and experienced developers.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Chat History</h3>
+        <p>Every conversation is saved so you can pick up where you left off. Switch agents without losing your progress.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Fast Responses</h3>
+        <p>Powered by Google Gemini — one of the fastest and most capable AI models available today.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3>Works Everywhere</h3>
+        <p>Use it on your phone, tablet or desktop. No app download needed — works right in your browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="section-title">Simple Pricing</div>
+    <div class="section-sub">Start free, upgrade when you're ready</div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0 <span>/ month</span></div>
+        <div class="plan-desc">Perfect for trying it out</div>
+        <ul class="plan-features">
+          <li>Access to all 3 agents</li>
+          <li>20 messages per day</li>
+          <li>Chat history</li>
+          <li>Works on all devices</li>
+        </ul>
+        <a href="/index.html" class="plan-btn outline">Get Started Free</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">$9 <span>/ month</span></div>
+        <div class="plan-desc">For students and professionals</div>
+        <ul class="plan-features">
+          <li>Unlimited messages</li>
+          <li>Access to all 3 agents</li>
+          <li>Priority responses</li>
+          <li>Full chat history</li>
+          <li>Early access to new agents</li>
+        </ul>
+        <a href="/index.html" class="plan-btn filled">Start Free Trial →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to get started?</h2>
+    <p>Join thousands of students and professionals using AI Assistant every day. Free forever, no credit card needed.</p>
+    <a href="/index.html" class="btn-primary">Try it Free — No signup needed →</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div>✦ AI Assistant — Built with ❤️</div>
+    <div>Powered by Google Gemini</div>
+  </footer>
+
+</body>
+</html>
