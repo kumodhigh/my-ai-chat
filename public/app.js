@@ -74,6 +74,12 @@ function showSuggestions(agentId) {
       "Give me 5 algebra practice questions",
       "Quiz me on Loksewa GK",
       "Explain Newton's laws of motion"
+    ],
+    codehelper: [
+      "Explain what JavaScript is",
+      "Write a function to reverse a string",
+      "What is the difference between var, let and const?",
+      "Help me understand how APIs work"
     ]
   };
 
