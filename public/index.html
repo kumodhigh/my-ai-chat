@@ -9,38 +9,66 @@
 </head>
 <body>
 
-  <div class="chat-container">
+  <div class="app">
 
-    <!-- Header -->
-    <div class="chat-header">
-      <div class="header-left">
-        <div class="agent-avatar" id="agent-avatar">A</div>
-        <div>
-          <div class="agent-name" id="agent-name">Aria</div>
-          <div class="agent-status">
-            <span class="dot"></span> Online
-          </div>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+      <div class="sidebar-top">
+        <!-- Toggle button -->
+        <button class="toggle-btn" id="toggle-btn" title="Collapse sidebar">☰</button>
+        <!-- New Chat button -->
+        <button class="new-chat-btn" id="new-chat-btn">
+          <span class="btn-icon">✏</span>
+          <span class="btn-text">New Chat</span>
+        </button>
+      </div>
+
+      <!-- Agent switcher -->
+      <div class="sidebar-section">
+        <div class="section-label">Agents</div>
+        <div id="agent-list"></div>
+      </div>
+
+      <!-- Chat history -->
+      <div class="sidebar-section">
+        <div class="section-label">Recent Chats</div>
+        <div id="history-list">
+          <div class="empty-history">No chats yet</div>
         </div>
       </div>
-      <button id="clear-btn">↺ Clear</button>
+
     </div>
 
-    <!-- Agent Selector Bar -->
-    <div class="agent-bar" id="agent-bar">
-      <!-- Filled by app.js -->
-    </div>
+    <!-- Main chat area -->
+    <div class="chat-area">
 
-    <!-- Messages -->
-    <div id="chat-messages" class="chat-messages">
-    </div>
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="header-left">
+          <button class="mobile-toggle" id="mobile-toggle">☰</button>
+          <div class="agent-avatar" id="agent-avatar">A</div>
+          <div>
+            <div class="agent-name" id="agent-name">Aria</div>
+            <div class="agent-status">
+              <span class="dot"></span> Online
+            </div>
+          </div>
+        </div>
+        <button id="clear-btn">↺ Clear</button>
+      </div>
 
-    <!-- Input -->
-    <div class="chat-input-area">
-      <input type="text" id="user-input"
-        placeholder="Type your message..." autocomplete="off"/>
-      <button id="send-btn">Send</button>
-    </div>
+      <!-- Messages -->
+      <div id="chat-messages" class="chat-messages"></div>
 
+      <!-- Input -->
+      <div class="chat-input-area">
+        <input type="text" id="user-input"
+          placeholder="Type your message..." autocomplete="off"/>
+        <button id="send-btn">Send</button>
+      </div>
+
+    </div>
   </div>
 
   <script src="app.js"></script>
